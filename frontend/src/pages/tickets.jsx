@@ -46,7 +46,8 @@ function Tickets() {
       });
 
       const data = await res.json();
-
+      console.log(res);
+      
       if (res.ok) {
         setForm({ title: "", description: ""});
         fetchTickets()

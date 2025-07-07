@@ -45,6 +45,7 @@ export const login = async (req, res) => {
 
     try {
         const user = User.findOne({email})
+        
         if(!user)
             return res.status(401).json({error: "User not found" })
 

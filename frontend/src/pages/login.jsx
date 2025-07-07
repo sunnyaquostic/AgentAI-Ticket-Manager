@@ -15,7 +15,7 @@ function Login() {
     setLoading(true)
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -29,11 +29,11 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data.user))
         navigate("/")
       } else {
-        alert(data.message || "Signup failed")
+        alert(data.message || "Login failed")
       }
     } catch (error) {
-      console.error("Something went wrong with signup", error)
-      alert("Signup - something went wrong")
+      console.error("Something went wrong while login", error)
+      alert("Login - something went wrong")
     }
     finally {
       setLoading(false)
@@ -58,7 +58,7 @@ function Login() {
             name='password' 
             placeholder='Password'
             className='input input-bordered'
-            value={form.email}
+            value={form.password}
             onChange={handleChange}
             required
           />
