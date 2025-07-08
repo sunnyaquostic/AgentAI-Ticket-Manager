@@ -44,8 +44,7 @@ export const login = async (req, res) => {
     const {email, password} = req.body
 
     try {
-        const user = User.findOne({email})
-        
+        const user = await User.findOne({email})
         if(!user)
             return res.status(401).json({error: "User not found" })
 
@@ -118,13 +117,16 @@ export const updateUser = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
+    const role = req.user.role
     try {
-        if(req.user.role !== "admin") 
+        if(role !== "moderator") 
             return res.status(403).json({
-                error: "Forbidden"
-            })
-
+            error: "Forbidden"
+        })
+    
         const users = await User.find().select("-password")
+        console.log(users);
+        
         return res.status(200).json({
             success: true,
             users
