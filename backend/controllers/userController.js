@@ -12,7 +12,6 @@ export const signup = async (req, res) => {
             password: hashed,
             skills 
         });
-
         // fire inngest event
         await inngest.send({
             name: "user/signup",
@@ -73,13 +72,13 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(" ")[1]
+        const token = req.headers.authorization?.split(" ")[1]
         if(!token)
             return res.status(401).json({error: "Unauthorized"})
 
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) =>{
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if(err) return res.status(401).json({error: "Unauthorized"})
-            return res.state(200).json({message: "Logout successfully!"})
+            return res.status(200).json({message: "Logout successfully!"})
         })
     } catch (error) {
         return res.status(500).json({
