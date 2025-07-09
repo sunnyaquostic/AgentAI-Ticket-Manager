@@ -1,6 +1,7 @@
 import { createAgent, gemini } from "@inngest/agent-kit"
 
 const analyzeTicket = async (ticket) => {
+    console.log(ticket)
     const supportAgent = createAgent({
         model: gemini({
             model: "gemini-1.5-flash-8b",
@@ -22,7 +23,7 @@ const analyzeTicket = async (ticket) => {
             Repeat: Do not wrap your output in markdown or code fences.
         `
     });
-
+    
     const response = await supportAgent.run(`You are a ticket triage agent. Only return a strict JSON object with no extra text, 
         headers, or markdown.
 
@@ -48,11 +49,11 @@ const analyzeTicket = async (ticket) => {
         - Title: ${ticket.title}
         - Description: ${ticket.description};
     `);
-
+    
     const raw = response.output[0].content
 
     try {
-        const match = raw.match(/```json\s*([\s\s]*?)\s*```/i);
+        const match = raw.match(/```json\s*([\s\S]*?)\s*```/i);
         const jsonString = match ? match[1] : raw.trim()
         return JSON.parse(jsonString)
     } catch (error) {

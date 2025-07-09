@@ -15,7 +15,7 @@ export const onTicketCreated = inngest.createFunction(
             const ticket = await step.run("fetch-ticket", async () => {
                 const ticketObject = await Ticket.findById(ticketId)
 
-                if(!ticket) 
+                if(!ticketObject) 
                     throw new NonRetriableError("Ticket not found")
 
                 return ticketObject;
@@ -39,11 +39,13 @@ export const onTicketCreated = inngest.createFunction(
 
                     skills = aiResponse.relatedSkills
                 }
-
+                console.log(skills);
+                
                 return skills
             })
 
             const moderator = await step.run("assign-moderator", async () => {
+                
                 let user = await User.findOne({
                     role: 'moderator',
                     skills: {
@@ -66,6 +68,7 @@ export const onTicketCreated = inngest.createFunction(
 
                 return user
             });
+
             await step.run("send-email-notification", async () => {
                 if(moderator) {
                     const finalTicket = await Ticket.findById(ticket._id)

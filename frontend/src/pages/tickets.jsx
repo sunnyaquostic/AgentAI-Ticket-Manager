@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
+import Navbar from "../components/navbar.js";
 
 
 function Tickets() {
   const [form, setForm] = useState({ title: "", description: ""});
   const [tickets, setTickets] = useState([])
   const [loading, setLoading] = useState(false)
-
+  
   const token = localStorage.getItem("token")
 
-  const fetchTickets = async () => {
+  const fetchTickets = async () => {     
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tickets`, {
         headers: { Authorization: `Bearer ${token}`},
@@ -17,6 +18,7 @@ function Tickets() {
       });
 
       const data = await res.json();
+      // console.log(data)
       setTickets(data.tickets || [])
     } catch (error) {
       console.log("Failed to fetch tickets", error)
@@ -28,13 +30,14 @@ function Tickets() {
   }, []);
 
   const handleChange = (e) => {
-    setForm({...form, [e.target.name]: [e.target.value]})
+    setForm({...form, [e.target.name]: e.target.value})
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(false)
-
+    console.log(form)
+    
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tickets`, {
         method: 'POST',
@@ -46,8 +49,7 @@ function Tickets() {
       });
 
       const data = await res.json();
-      console.log(res);
-      
+      console.log(data)
       if (res.ok) {
         setForm({ title: "", description: ""});
         fetchTickets()
@@ -68,6 +70,7 @@ function Tickets() {
       <form onSubmit={handleSubmit} className="space-y-3 mb-8">
         <input 
           name="title"
+          type="text"
           value={form.title}
           onChange={handleChange}
           placeholder="Ticket Title"

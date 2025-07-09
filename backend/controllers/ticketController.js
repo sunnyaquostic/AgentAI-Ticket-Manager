@@ -11,7 +11,7 @@ export const createTicket = async (req, res) => {
                 message: "Title and Description are required"
             })
 
-        const newTicket = Ticket.create({
+        const newTicket = await Ticket.create({
             title,
             description,
             createdBy: req.user._id.toString()
@@ -43,8 +43,10 @@ export const createTicket = async (req, res) => {
 }
 
 export const getTickets = async (req, res) => {
+    
     try {
         const user = req.user
+        console.log(user)
         let tickets = []
 
         if (user.role !== "user") {
@@ -52,10 +54,11 @@ export const getTickets = async (req, res) => {
                 .populate("assignedTo", ["email", "_id"])
                 .sort({createdAt: -1})
         } else {
-            await Ticket.find({createdBy: user._id})
+            tickets = await Ticket.find({createdBy: user._id})
                 .select("title description status createdAt")
                 .sort({createdAt: -1})
         }
+        console.log(tickets)
         return res.status(200).json(tickets)
     } catch (err) {
         console.error("Error fetching tickets: ", err.message)
