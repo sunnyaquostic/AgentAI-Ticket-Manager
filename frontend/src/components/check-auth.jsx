@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CheckAuth({ children, protectedRoute }) {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
+function CheckAuth({ children, protected: isProtected }) {
+  const navigate = useNavigate();
+  const [checked, setChecked] = useState(false); // Auth check flag
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
 
-    if(protectedRoute) {
-      if (!token) {
-        navigate("/login")
-      } else {
-        setLoading(false)
-      }
+    if (isProtected && !token) {
+      // Not authenticated, redirect to login
+      navigate("/login", { replace: true });
+    } else if (!isProtected && token) {
+      // Already logged in, redirect to home
+      navigate("/", { replace: true });
     } else {
-      if (token) {
-        navigate("/")
-      } else {
-        setLoading(false)
-      }
+      // Access granted
+      setChecked(true);
     }
-  }, [navigate, protectedRoute])
-  
-  if (loading) {
-    return <div>loading...</div>
+  }, [isProtected, navigate]);
+
+  if (!checked) {
+    return <div className="text-center mt-10">Checking authentication...</div>;
   }
 
-  return children
+  return <>{children}</>;
 }
 
-export default CheckAuth
+export default CheckAuth;

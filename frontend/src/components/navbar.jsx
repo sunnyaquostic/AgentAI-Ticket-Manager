@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function Navbar() {
   const token = localStorage.getItem("token");
@@ -20,7 +21,8 @@ export default function Navbar() {
           Ticket AI
         </Link>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
+        <ThemeToggle />
         {!token ? (
           <>
             <Link to="/signup" className="btn btn-sm">

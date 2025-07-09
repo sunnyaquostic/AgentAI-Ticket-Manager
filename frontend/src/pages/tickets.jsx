@@ -105,15 +105,17 @@ function Tickets() {
         </h2>
         <div className="space-y-3">
           {
+            // console.log(tickets)
+            
             tickets.map((ticket) => (
               <Link
                 key={ticket._id}
-                className="card shadow-md p-4 bg-gray-800"
+                className="card shadow-md p-4 bg-base-100 hover:bg-base-200 transition-colors"
                 to={`/tickets/${ticket._id}`}
               >
                 <h3 className="font-bold text-lg">{ticket.title}</h3>
                 <p className="text-sm">{ticket.description}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-base-content/60">
                   Created At: {new Date(ticket.createdAt).toLocaleString()}
                 </p>
               </Link>

@@ -41,7 +41,8 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     const {email, password} = req.body
-
+    console.log(req.body);
+    
     try {
         const user = await User.findOne({email})
         if(!user)
@@ -118,7 +119,7 @@ export const updateUser = async (req, res) => {
 export const getUser = async (req, res) => {
     const role = req.user.role
     try {
-        if(role !== "moderator") 
+        if(role !== "admin") 
             return res.status(403).json({
             error: "Forbidden"
         })
