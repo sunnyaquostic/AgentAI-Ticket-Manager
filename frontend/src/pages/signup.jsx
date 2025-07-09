@@ -6,6 +6,10 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleLoginRedirect = () => {
+    navigate('/login')
+  }
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -15,7 +19,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/auth/signup`,
+        `${import.meta.env.VITE_SERVER_URL}/signup`,
         {
           method: "POST",
           headers: {
@@ -36,7 +40,7 @@ export default function SignupPage() {
       }
     } catch (err) {
       alert("Something went wrong");
-      console.error(err);
+      console.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -75,6 +79,16 @@ export default function SignupPage() {
               disabled={loading}
             >
               {loading ? "Signing up..." : "Sign Up"}
+            </button>
+          </div>
+                    <div className='form-control mt-4 flex justify-between items-center text-xl'>
+            Already have an account?
+            <button 
+              type="button"
+              className='btn btn-success w-50% '
+              onClick={handleLoginRedirect}
+            >
+              Login
             </button>
           </div>
         </form>

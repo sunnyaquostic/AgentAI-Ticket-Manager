@@ -1,5 +1,4 @@
 import inngest from "../inngest/client.js";
-import ticket from "../models/ticket.js";
 import Ticket from "../models/ticket.js";
 
 export const createTicket = async (req, res) => {
@@ -43,8 +42,7 @@ export const createTicket = async (req, res) => {
 }
 
 export const getTickets = async (req, res) => {
-    //  console.log('we got here');
-    //  console.log(req.user);
+
     try {
         const user = req.user
 
@@ -59,7 +57,6 @@ export const getTickets = async (req, res) => {
                 .select("title description status createdAt")
                 .sort({createdAt: -1})
         }
-        console.log(tickets)
         return res.status(200).json(tickets)
     } catch (err) {
         console.error("Error fetching tickets: ", err.message)

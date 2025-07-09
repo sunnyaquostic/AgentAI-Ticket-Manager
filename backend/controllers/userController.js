@@ -5,6 +5,7 @@ import inngest  from '../inngest/client.js';
 
 export const signup = async (req, res) => {
     const {email, password, skills = []} = req.body
+    console.log(req.body)
     try {
         const hashed = await bcrypt.hash(password, 10)
         const user = await User.create({

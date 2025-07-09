@@ -6,6 +6,10 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
+  const handleSignupRedirect = () => {
+    navigate("/signup")
+  }
+
   const handleChange = (e) => {
     setForm({...form, [e.target.name] : e.target.value})
   }
@@ -70,6 +74,17 @@ function Login() {
               disabled={loading}
             >
               {loading ? "Login in..." : "Login"}
+            </button>
+            
+          </div>
+          <div className='form-control mt-4 flex justify-between items-center text-xl'>
+            Don't have an account?
+            <button 
+              type="button"
+              className='btn bg-red-400 w-50% '
+              onClick={handleSignupRedirect}
+            >
+              Sign-UP
             </button>
           </div>
         </form>
