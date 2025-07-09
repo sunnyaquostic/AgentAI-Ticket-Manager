@@ -43,7 +43,7 @@ function Login() {
     <div className='min-h-screen flex items-center justify-center bg-base-200'>
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <form onSubmit={handleLogin} className='card-body'>
-          <h2 className="card-title justify-center">Sign Up</h2>
+          <h2 className="card-title justify-center">Login</h2>
           <input 
             type="email"
             name='email' 
