@@ -46,7 +46,6 @@ export const getTickets = async (req, res) => {
     
     try {
         const user = req.user
-        console.log(user)
         let tickets = []
 
         if (user.role !== "user") {

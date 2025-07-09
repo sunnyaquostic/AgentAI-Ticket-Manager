@@ -13,13 +13,13 @@ function Tickets() {
   const fetchTickets = async () => {     
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tickets`, {
-        headers: { Authorization: `Bearer ${token}`},
         method: "GET",
+        headers: { Authorization: `Bearer ${token}`},
       });
 
       const data = await res.json();
-      // console.log(data)
-      setTickets(data.tickets || [])
+
+      setTickets(data || [])
     } catch (error) {
       console.log("Failed to fetch tickets", error)
     }
