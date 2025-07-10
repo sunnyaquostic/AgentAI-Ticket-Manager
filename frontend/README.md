@@ -1,12 +1,54 @@
-# React + Vite
+# Ticket AI Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Ticket AI fullstack project, built with React, Vite, TailwindCSS, DaisyUI, and React Router.
 
-Currently, two official plugins are available:
+## Features
+- User authentication (signup, login, logout)
+- Protected routes for authenticated users
+- Role-based access (admin panel)
+- Ticket creation, listing, and details view
+- Responsive UI with theme toggling (light/dark mode)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Routing Structure
+- `/` — Ticket list and creation (protected)
+- `/tickets/:id` — Ticket details (protected)
+- `/login` — Login page
+- `/signup` — Signup page
+- `/admin` — Admin panel (protected, admin only)
 
-## Expanding the ESLint configuration
+## Authentication & Authorization
+- Uses JWT tokens stored in localStorage
+- `CheckAuth` component protects routes and redirects based on auth state
+- Admin panel only accessible to users with `admin` role
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Theme Support
+- Toggle between light and dark mode using the button in the navbar
+- Theme preference is saved in localStorage
+
+## Admin Panel
+- View, search, and edit users (role and skills)
+- Only accessible to admin users
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. The app will run at [http://localhost:5173](http://localhost:5173)
+
+## Environment Variables
+- Set `VITE_SERVER_URL` in a `.env` file to point to your backend API URL.
+
+## Scripts
+- `npm run dev` — Start dev server
+- `npm run build` — Build for production
+- `npm run preview` — Preview production build
+- `npm run lint` — Lint code
+
+---
+For fullstack setup and backend API details, see the main project [README](../README.md).
